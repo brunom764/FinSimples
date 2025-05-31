@@ -1,10 +1,8 @@
-# lavanderIA
-Manchas em roupas são difíceis de identificar e remover, mas o lavanderIA lhe ajuda!
 
-# 🧙‍♀️ Lavanderia Mágica - Seu Assistente Mágico Contra Manchas
+# 🧙‍♀️ LavanderIA - Seu Assistente Mágico Contra Manchas
 
 ![Capa do Projeto](https://example.com/capa-lavanderia-magica.jpg)  
-*Transformando o drama das manchas em histórias encantadas*
+*Manchas em roupas são difíceis de identificar e remover, mas o lavanderIA lhe ajuda!*
 
 ## ✨ Visão Geral
 A **Lavanderia Mágica** é um assistente inteligente que combina:
