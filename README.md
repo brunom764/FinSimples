@@ -64,7 +64,7 @@ Baseado no histórico dos últimos 10 anos, a Petrobras tem mostrado...
 
 ## 📚 Documentação
 
-Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://github.com/seuusuario/finsimples/wiki).
+Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://github.com/brunom764/finsimples/README.md).
 
 ## 🤝 Como Contribuir
 
