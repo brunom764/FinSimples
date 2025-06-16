@@ -64,7 +64,7 @@ Baseado no histórico dos últimos 10 anos, a Petrobras tem mostrado...
 
 ## 📚 Documentação
 
-Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://github.com/brunom764/FinSimples/README.md).
+Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://github.com/brunom764/FinSimples/blob/main/README.md).
 
 ## 🤝 Como Contribuir
 
@@ -74,11 +74,11 @@ Para documentação completa, incluindo API reference e guias avançados, visite
 4. Push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 
-Siga nossas [diretrizes de contribuição]([CONTRIBUTING.md](https://github.com/brunom764/FinSimples/CONTRIBUTING.md)).
+Siga nossas [diretrizes de contribuição]([CONTRIBUTING.md](https://github.com/brunom764/FinSimples/blob/main/CONTRIBUTING.md).
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE]([LICENSE](https://github.com/brunom764/FinSimples/LICENSE.md)) para detalhes.
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](https://github.com/brunom764/FinSimples/blob/main/LICENSE.md) para detalhes.
 
 ## 👏 Créditos
 
