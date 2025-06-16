@@ -74,7 +74,7 @@ Para documentação completa, incluindo API reference e guias avançados, visite
 4. Push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 
-Siga nossas [diretrizes de contribuição]([CONTRIBUTING.md](https://github.com/brunom764/FinSimples/blob/main/CONTRIBUTING.md).
+Siga nossas [diretrizes de contribuição](https://github.com/brunom764/FinSimples/blob/main/CONTRIBUTING.md).
 
 ## 📄 Licença
 
