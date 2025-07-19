@@ -1,4 +1,3 @@
-import argparse
 import logging
 import os
 
@@ -11,40 +10,17 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
 from joblib import dump
 
-import pandas as pd
-import numpy as np
-
-# Seed for reproducibility
-np.random.seed(42)
-
-# Create a date range
-dates = pd.date_range(start="2025-07-01", periods=10, freq="D")
-
-# Generate data for two tickers
-data = []
-for ticker in ["AAA", "BBB"]:
-    price = 100 + np.cumsum(np.random.normal(0, 1, size=len(dates)))
-    for i, date in enumerate(dates):
-        open_price = round(price[i] + np.random.normal(0, 0.5), 2)
-        high_price = round(open_price + abs(np.random.normal(0, 1)), 2)
-        low_price = round(open_price - abs(np.random.normal(0, 1)), 2)
-        close_price = round(low_price + np.random.rand() * (high_price - low_price), 2)
-        data.append(
-            {
-                "date": date,
-                "ticker": ticker,
-                "open": open_price,
-                "high": high_price,
-                "low": low_price,
-                "close": close_price,
-            }
-        )
-
-# Build DataFrame
-df_test = pd.DataFrame(data)
+# Optional AutoML
+try:
+    from tpot import TPOTRegressor
+except ImportError:
+    TPOTRegressor = None
+    logging.warning(
+        "TPOT not installed. To enable AutoML, install via: pip install tpot"
+    )
 
 # configure logging
-tlogging = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -55,13 +31,14 @@ logging.basicConfig(
 DATA_PATH = os.getenv("DATA_PATH", "data/dados_acoes.csv")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "models/stock_model.joblib")
 TEST_SIZE = float(os.getenv("TEST_SIZE", "0.2"))
+USE_AUTOML = os.getenv("USE_AUTOML", "true").lower() in ("true", "1", "yes")
 # ======================
 
 
 def load_data(file_path: str) -> pd.DataFrame:
     """load csv and sort by ticker and date"""
     if not os.path.exists(file_path):
-        logging.error("data file not found: %s", file_path)
+        logger.error("data file not found: %s", file_path)
         raise FileNotFoundError(f"file not found: {file_path}")
     df = pd.read_csv(file_path, parse_dates=["date"])
     df.sort_values(["ticker", "date"], inplace=True)
@@ -96,7 +73,7 @@ def split_data(df: pd.DataFrame, features: list, test_size: float):
     split_idx = int(len(df) * (1 - test_size))
     X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
     y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
-    logging.info(
+    logger.info(
         "data split: %d train samples, %d test samples", len(X_train), len(X_test)
     )
     return X_train, X_test, y_train, y_test
@@ -119,28 +96,83 @@ def train_and_evaluate(X_train, X_test, y_train, y_test):
     search = GridSearchCV(
         pipeline, param_grid, cv=3, scoring="neg_mean_squared_error", n_jobs=-1
     )
-    logging.info("starting grid search with params: %s", param_grid)
+    logger.info("starting grid search with params: %s", param_grid)
     search.fit(X_train, y_train)
     best = search.best_estimator_
-    logging.info("best params: %s", search.best_params_)
+    logger.info("best params: %s", search.best_params_)
     y_pred = best.predict(X_test)
     mse = mean_squared_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
-    logging.info("evaluation results -- mse: %.6f, r2: %.3f", mse, r2)
+    logger.info("evaluation results -- mse: %.6f, r2: %.3f", mse, r2)
     return best
+
+
+def run_automl(
+    X_train,
+    X_test,
+    y_train,
+    y_test,
+    generations=2,  # menos gerações
+    population_size=20,  # população menor
+    cv=3,  # validação cruzada mais leve
+    time_budget=10,  # 10 minutos de execução total
+    eval_time_budget=1,  # 1 minuto por pipeline avaliado
+    n_jobs=3,
+):
+    """run a lighter TPOT AutoML with time and model constraints"""
+    if TPOTRegressor is None:
+        raise ImportError("Instale o tpot: pip install tpot")
+
+    # configurar apenas dois modelos: RandomForest e XGBoost
+    custom_config = {
+        "sklearn.ensemble.RandomForestRegressor": {
+            "n_estimators": [100],
+            "max_depth": [5, 10],
+        },
+        "xgboost.XGBRegressor": {"n_estimators": [50], "max_depth": [3, 5]},
+    }
+
+    tpot = TPOTRegressor(
+        generations=generations,
+        population_size=population_size,
+        cv=cv,
+        max_time_mins=time_budget,
+        max_eval_time_mins=eval_time_budget,
+        random_state=42,
+        n_jobs=n_jobs,
+        config_dict=custom_config,
+        verbosity=1,  # só logs mínimos
+    )
+
+    logger.info(
+        "TPOT leve: gens=%d, pop=%d, cv=%d, budget=%dm, eval_budget=%dm",
+        generations,
+        population_size,
+        cv,
+        time_budget,
+        eval_time_budget,
+    )
+    tpot.fit(X_train, y_train)
+    score = tpot.score(X_test, y_test)
+    logger.info("TPOT leve R2: %.3f", score)
+
+    export_path = os.getenv("TPOT_EXPORT", "models/tpot_pipeline.py")
+    tpot.export(export_path)
+    logger.info("Pipeline exportado em %s", export_path)
+
+    return tpot.fitted_pipeline_
 
 
 def save_model(model: Pipeline, output_path: str):
     """save trained model to disk"""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     dump(model, output_path)
-    logging.info("model saved at %s", output_path)
+    logger.info("model saved at %s", output_path)
 
 
 def main():
-    logging.info("using data file: %s", DATA_PATH)
-    # df = load_data(DATA_PATH)
-    df = df_test
+    logger.info("using data file: %s", DATA_PATH)
+    df = load_data(DATA_PATH)
     df_feat = engineer_features(df)
     feature_cols = [
         "return_lag_1",
@@ -150,7 +182,10 @@ def main():
         "volatility_5",
     ]
     X_train, X_test, y_train, y_test = split_data(df_feat, feature_cols, TEST_SIZE)
-    model = train_and_evaluate(X_train, X_test, y_train, y_test)
+    if USE_AUTOML:
+        model = run_automl(X_train, X_test, y_train, y_test)
+    else:
+        model = train_and_evaluate(X_train, X_test, y_train, y_test)
     save_model(model, OUTPUT_PATH)
 
 
