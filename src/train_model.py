@@ -28,20 +28,43 @@ logging.basicConfig(
 )
 
 # === Configuration ===
-DATA_PATH = os.getenv("DATA_PATH", "data/dados_acoes.csv")
+# DATA_PATH = os.getenv("DATA_PATH", "data/dados_acoes.csv")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "models/stock_model.joblib")
 TEST_SIZE = float(os.getenv("TEST_SIZE", "0.2"))
-USE_AUTOML = os.getenv("USE_AUTOML", "true").lower() in ("true", "1", "yes")
+USE_AUTOML = os.getenv("USE_AUTOML", "false").lower() in ("true", "1", "yes")
 # ======================
 
+def concatena_arquivos():
+    # Caminho onde estão os arquivos .parquet
+    pasta = 'C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets'  # <-- Substitua
 
-def load_data(file_path: str) -> pd.DataFrame:
-    """load csv and sort by ticker and date"""
-    if not os.path.exists(file_path):
-        logger.error("data file not found: %s", file_path)
-        raise FileNotFoundError(f"file not found: {file_path}")
-    df = pd.read_csv(file_path, parse_dates=["date"])
-    df.sort_values(["ticker", "date"], inplace=True)
+    # Lista para armazenar os DataFrames
+    dfs = []
+
+    # Lista apenas arquivos .parquet na pasta
+    arquivos = [arq for arq in os.listdir(pasta) if arq.endswith('.parquet')]
+
+    # Lê e adiciona cada parquet à lista
+    for arquivo in arquivos:
+        caminho_arquivo = os.path.join(pasta, arquivo)
+        df = pd.read_parquet(caminho_arquivo)
+        dfs.append(df)
+
+    # Concatena todos os DataFrames
+    df_concatenado = pd.concat(dfs, ignore_index=True)
+
+    return df_concatenado
+
+
+def load_data():
+    """load csv and sort by cod_negociacao and date"""
+    # if not os.path.exists(file_path):
+    #     logger.error("data file not found: %s", file_path)
+    #     raise FileNotFoundError(f"file not found: {file_path}")
+    df = pd.read_parquet('C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets/cotacoes_b3_2024.parquet')
+    df['date'] = pd.to_datetime(df['data_pregao'])
+    df.drop(columns=['data_pregao'], inplace=True)
+    df.sort_values(["cod_negociacao", "date"], inplace=True)
     df.reset_index(drop=True, inplace=True)
     return df
 
@@ -49,14 +72,14 @@ def load_data(file_path: str) -> pd.DataFrame:
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """create features and target for prediction"""
     df = df.copy()
-    df["return"] = df.groupby("ticker")["close"].pct_change()
+    df["return"] = df.groupby("cod_negociacao")["preco_fechamento"].pct_change()
     for lag in [1, 2, 3]:
-        df[f"return_lag_{lag}"] = df.groupby("ticker")["return"].shift(lag)
-    df["sma_5"] = df.groupby("ticker")["close"].transform(lambda x: x.rolling(5).mean())
-    df["volatility_5"] = df.groupby("ticker")["return"].transform(
+        df[f"return_lag_{lag}"] = df.groupby("cod_negociacao")["return"].shift(lag)
+    df["sma_5"] = df.groupby("cod_negociacao")["preco_fechamento"].transform(lambda x: x.rolling(5).mean())
+    df["volatility_5"] = df.groupby("cod_negociacao")["return"].transform(
         lambda x: x.rolling(5).std()
     )
-    df["target"] = df.groupby("ticker")["return"].shift(-1)
+    df["target"] = df.groupby("cod_negociacao")["return"].shift(-1)
     required = [f"return_lag_{l}" for l in [1, 2, 3]] + [
         "sma_5",
         "volatility_5",
@@ -117,7 +140,7 @@ def run_automl(
     cv=3,  # validação cruzada mais leve
     time_budget=10,  # 10 minutos de execução total
     eval_time_budget=1,  # 1 minuto por pipeline avaliado
-    n_jobs=3,
+    n_jobs=1,
 ):
     """run a lighter TPOT AutoML with time and model constraints"""
     if TPOTRegressor is None:
@@ -171,8 +194,8 @@ def save_model(model: Pipeline, output_path: str):
 
 
 def main():
-    logger.info("using data file: %s", DATA_PATH)
-    df = load_data(DATA_PATH)
+    # logger.info("using data file: %s", DATA_PATH)
+    df = load_data()
     df_feat = engineer_features(df)
     feature_cols = [
         "return_lag_1",
@@ -182,6 +205,11 @@ def main():
         "volatility_5",
     ]
     X_train, X_test, y_train, y_test = split_data(df_feat, feature_cols, TEST_SIZE)
+
+    mask = y_train < 100_000
+    X_train = X_train[mask]
+    y_train = y_train[mask]
+
     if USE_AUTOML:
         model = run_automl(X_train, X_test, y_train, y_test)
     else:
