@@ -29,7 +29,7 @@
    Ingestão via API **bravi.dev**, que faz download automático dos CSVs e gera artefatos Parquet.
 
 9. **Acesso aos Dados**  
-   - Data Lake em S3 (`parquet://bucket/series-b3/`)  
+   - Data Lake em S3 (`parquet://bucket/series-b3/`)
    - Acesso via API interna `bravi.dev` ou diretamente pelo filesystem com pandas + pyarrow
 
 10. **Proprietário dos Dados**  

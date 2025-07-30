@@ -1,8 +1,6 @@
 import logging
 import os
-
 import pandas as pd
-import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -34,15 +32,16 @@ TEST_SIZE = float(os.getenv("TEST_SIZE", "0.2"))
 USE_AUTOML = os.getenv("USE_AUTOML", "false").lower() in ("true", "1", "yes")
 # ======================
 
+
 def concatena_arquivos():
     # Caminho onde estão os arquivos .parquet
-    pasta = 'C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets'  # <-- Substitua
+    pasta = "C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets"  # <-- Substitua
 
     # Lista para armazenar os DataFrames
     dfs = []
 
     # Lista apenas arquivos .parquet na pasta
-    arquivos = [arq for arq in os.listdir(pasta) if arq.endswith('.parquet')]
+    arquivos = [arq for arq in os.listdir(pasta) if arq.endswith(".parquet")]
 
     # Lê e adiciona cada parquet à lista
     for arquivo in arquivos:
@@ -61,9 +60,11 @@ def load_data():
     # if not os.path.exists(file_path):
     #     logger.error("data file not found: %s", file_path)
     #     raise FileNotFoundError(f"file not found: {file_path}")
-    df = pd.read_parquet('C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets/cotacoes_b3_2024.parquet')
-    df['date'] = pd.to_datetime(df['data_pregao'])
-    df.drop(columns=['data_pregao'], inplace=True)
+    df = pd.read_parquet(
+        "C:/Users/Colaborador/Documents/repos/gerais/FinSimples/analise/datasets/cotacoes_b3_2024.parquet"
+    )
+    df["date"] = pd.to_datetime(df["data_pregao"])
+    df.drop(columns=["data_pregao"], inplace=True)
     df.sort_values(["cod_negociacao", "date"], inplace=True)
     df.reset_index(drop=True, inplace=True)
     return df
@@ -75,12 +76,14 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df["return"] = df.groupby("cod_negociacao")["preco_fechamento"].pct_change()
     for lag in [1, 2, 3]:
         df[f"return_lag_{lag}"] = df.groupby("cod_negociacao")["return"].shift(lag)
-    df["sma_5"] = df.groupby("cod_negociacao")["preco_fechamento"].transform(lambda x: x.rolling(5).mean())
+    df["sma_5"] = df.groupby("cod_negociacao")["preco_fechamento"].transform(
+        lambda x: x.rolling(5).mean()
+    )
     df["volatility_5"] = df.groupby("cod_negociacao")["return"].transform(
         lambda x: x.rolling(5).std()
     )
     df["target"] = df.groupby("cod_negociacao")["return"].shift(-1)
-    required = [f"return_lag_{l}" for l in [1, 2, 3]] + [
+    required = [f"return_lag_{lag}" for lag in [1, 2, 3]] + [
         "sma_5",
         "volatility_5",
         "target",
