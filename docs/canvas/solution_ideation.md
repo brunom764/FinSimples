@@ -16,7 +16,7 @@
 
 | Nº | Solução                                    | Descrição                                                                                                                                                                                     |
 | --- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **Motor One-Click de Previsão**       | Input: ativo + período → Output: card único com:`<br>`• Retorno projetado (%)`<br>`• Faixa de variação provável`<br>`• Índice de confiança (1-10)`<br>`• 3 riscos críticos |
+| 1   | **Motor One-Click de Previsão**       | Input: ativo + período → Output: card único com: • Retorno projetado (%) |
 | 2   | **ChatFinance Simplificado**           | Chatbot em linguagem natural que responde “Qual projeção de PETR4 para 3 anos?” e exibe o mesmo card One-Click.                                                                             |
 | 3   | **Widget Mobile “Pulso do Mercado”** | Botão “Prever agora” no app durante o pregão, exibindo gráfico rápido e card de resumo.                                                                                                   |
 | 4   | **API para Parceiros**                 | Endpoint REST que retorna JSON com projeção e bullets de riscos, permitindo integração e monetização.                                                                                     |
