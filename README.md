@@ -12,11 +12,11 @@ O FinSimples é uma ferramenta que utiliza IA generativa para democratizar o ace
 
 ## ✨ Funcionalidades Principais
 
-- 🔍 Busca simplificada de ativos (ações, ETFs, fundos)
+- 🔍 Busca simplificada de ativos
 - ⏳ Projeções de retorno para diferentes horizontes de tempo
 - 📊 Visualizações intuitivas do histórico e tendências
 - 💡 Explicações em linguagem natural geradas por IA
-- ⚠️ Alertas sobre riscos e volatilidade
+- ⚠️ Alertas sobre riscos 
 
 ## 📥 Instalação
 
@@ -26,41 +26,13 @@ git clone https://github.com/brunom764/finsimples.git
 cd finsimples
 ```
 
-2. Crie e ative um ambiente virtual (recomendado):
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-```
+2. Crie e ative um ambiente virtual (recomendado)
 
 3. Instale as dependências:
-```bash
-pip install -r requirements.txt
-```
+
 
 4. Configure suas chaves de API (renomeie `.env.example` para `.env` e preencha com suas credenciais)
 
-## 🛠️ Como Usar
-
-```python
-from finsimples import Analisador
-
-analisador = Analisador()
-resultado = analisador.analisar("PETR4", anos=5)
-
-print(resultado['projecao'])
-print(resultado['explicacao'])
-```
-
-Exemplo de output:
-```
-📊 Projeção para PETR4 em 5 anos:
-Retorno esperado: 42% (8.4% ao ano)
-Volatilidade estimada: Alta
-
-💡 Explicação:
-Baseado no histórico dos últimos 10 anos, a Petrobras tem mostrado...
-```
 
 ## 📚 Documentação
 

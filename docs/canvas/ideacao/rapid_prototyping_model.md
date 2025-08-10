@@ -15,7 +15,7 @@ Validar  se usuários conseguem:
 ### Ferramentas
 - 🐍 Python 
 - 📊 Yahoo Finance API 
-- 🎨 Figma
+- 🎨 v0.dev
 
 
 ### Dados
