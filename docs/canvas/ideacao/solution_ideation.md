@@ -4,7 +4,7 @@
 
 ## 1. 🛠️ Problema a Ser Resolvido
 
-**Descrição:**Investidores iniciantes e intermediários precisam de uma resposta rápida e direta sobre o retorno esperado de um ativo, sem lidar com jargões ou múltiplos inputs.
+**Descrição:** Investidores iniciantes e intermediários precisam de uma resposta **rápida** e direta sobre o retorno esperado de um ativo, sem lidar com jargões ou múltiplos inputs.
 
 - ⏱️ “Quero saber agora se X vale a pena para Y anos.”
 - 📉 Medo de interpretar projeções complexas e números soltos.
