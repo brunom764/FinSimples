@@ -16,11 +16,11 @@
 
 ## 3. Plano de Comunicação
 ### Comunicação Interna
-- **30/07/2025:** E-mail para equipes de Produto, Suporte e DevOps anunciando o início do piloto.  
-- **01/08/2025:** Webinar de 1 hora com equipe de Suporte para demonstração e Q&A.  
+- E-mail para equipes de Produto, Suporte e DevOps anunciando o início do piloto.  
+- Webinar de 1 hora com equipe de Suporte para demonstração e Q&A.  
 
 ### Comunicação Externa
-- **02/08/2025:** Notificação in-app e e-mail para investidores piloto.  
+- Notificação in-app e e-mail para investidores piloto.  
 - Envio de guia rápido de uso e FAQs no portal da corretora.
 
 ---
@@ -42,5 +42,5 @@
 ## 5. Critérios de “Go/No-Go”
 - [X] Todos os cenários críticos do **Canvas de Testes e Validação** aprovados.  
 - [X] Pipeline de CI/CD com deploy e rollback testados em homologação.  
-- [X] Equipes de Suporte e DevOps em plantão no dia do piloto (**02/08/2025**).  
+- [X] Equipes de Suporte e DevOps em plantão no dia do piloto.  
 - **Decisão Final:** **GO** / [ ] NO-GO
