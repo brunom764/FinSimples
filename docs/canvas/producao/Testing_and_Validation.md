@@ -27,7 +27,6 @@ Validar que o FinSimples:
 |-----------------------------|----------------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
 | **Funcional (ML)**          | Previsão básica                                                | `{"ticker":"PETR4","period":3}`                       | Retorno com R² ≥ 0.15                                                                              |
 | **Funcional (Integração)**  | Renderização Graph + Texto com contexto                        | Frontend envia dados e recebe JSON + texto do ChatGPT | Gráfico correto; texto contextualizado sobre empresa/setor; sem erros de formatação                             |
-| **Desempenho**              | 50 requisições simultâneas                                     | Simulação Locust                                      | p95 de latência ≤ 2 s                                                                                           |
 | **Segurança (API)**         | Injeção de comando via ticker                                  | `{"ticker":"PETR4; import os","period":3}`            | Parâmetros rejeitados/sanitizados; nenhuma execução de código não autorizado                                    |
 | **Segurança (Prompt GPT)**  | Prompt injection para extrair dados internos                   | Texto malicioso como contexto                         | ChatGPT ignora comandos maliciosos e mantém resposta segura                                                     |
 | **Usabilidade**             | Avaliação da clareza do texto gerado                           | Feedback de usuários piloto                           | ≥ 80% dos usuários consideram o texto claro, relevante e útil para decisão                                     |
@@ -37,19 +36,17 @@ Validar que o FinSimples:
 ## 4. Critérios de Aceitação
 - **ML:** R² ≥ 0.15 em hold-out.
 - **Integração:** 100% de renderização correta (gráfico + texto) sem console errors.
-- **Desempenho:** p95 ≤ 15 s para ≥ 95% das requisições.
 - **Segurança:** Zero inputs maliciosos aceitos (API e ChatGPT).
 - **Usabilidade:** ≥ 80% de aprovação em teste piloto.
 
 ---
 
 ## 5. Ferramentas de Teste
-- **ML:** pytest, pytest-benchmark
+- **ML:** pytest
 - **Integração:** Postman, Selenium
-- **Desempenho:** Locust, k6
-- **Segurança:** OWASP ZAP, fuzzing via pytest
+- **Segurança:** fuzzing via pytest
 - **Prompt Injection:** Testes manuais e automatizados com conjuntos de ataques conhecidos
-- **Usabilidade:** Questionários e entrevistas
+- **Usabilidade:** Teste guiado com o usuário
 
 ---
 
