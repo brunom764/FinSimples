@@ -45,7 +45,7 @@ Monitorar o efeito do FinSimples na agilidade e qualidade da decisão de investi
 ---
 
 ## 7. Benchmarks
-- **Tempo de resposta ideal:** ≤ 15 s  
+- **Tempo de resposta ideal:** ≤ 3 s  
 - **Taxa de erro ideal:** < 5%
 
 ---
