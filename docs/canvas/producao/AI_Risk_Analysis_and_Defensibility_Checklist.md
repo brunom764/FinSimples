@@ -17,7 +17,7 @@
   - Armazenar inputs do usuário (código + período) sem expurgo pode violar regras de retenção de dados pessoais.  
 
 #### 3. Análise de Segurança e Robustez
-- **Risco 1 (Crítico):** **Injection de input mal‑icioso**.  
+- **Risco 1 (Crítico):** **Injection de input malicioso**.  
   - Tickers ou parâmetros contendo caracteres especiais podem quebrar queries internas ou executar código indesejado.  
 - **Risco 2:** **Alucinação de modelo**.  
   - Sistema pode gerar retornos ou riscos imaginários (ex: “Retorno de 50% garantido”) sem embasamento histórico.  
