@@ -20,7 +20,7 @@
 - **Risco 1 (Crítico):** **Injection de input malicioso**.  
   - Tickers ou parâmetros contendo caracteres especiais podem quebrar queries internas ou executar código indesejado.  
 - **Risco 2:** **Alucinação de modelo**.  
-  - Sistema pode gerar retornos ou riscos imaginários (ex: “Retorno de 50% garantido”) sem embasamento histórico.  
+  - Sistema pode gerar retornos ou riscos imaginários (ex: “Retorno de 50%”) sem embasamento histórico.  
 
 #### 4. Análise de Transparência e Explicabilidade
 - **Risco 1:** **Opacidade na confiabilidade**.  
