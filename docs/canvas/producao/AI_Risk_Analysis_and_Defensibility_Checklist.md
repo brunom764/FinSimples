@@ -26,7 +26,7 @@
 - **Risco 1:** **Opacidade na confiabilidade**.  
   - Usuário não sabe intervalo de confiança ou fonte dos dados, gerando baixa confiança na previsão.  
 - **Risco 2:** **Excesso de confiança**.  
-  - Ausência de disclaimers explícitos leva investidores a assumirem previsões como certezas absolutas.  
+  - Ausência de disclaimers explícitos podem leva investidores a assumirem previsões como certezas absolutas.  
 
 #### 5. Matriz de Priorização de Riscos
 
