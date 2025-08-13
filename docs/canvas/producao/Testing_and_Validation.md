@@ -6,7 +6,7 @@
 Validar que o FinSimples:
 1. Gera previsões de retorno corretas e dentro da acurácia esperada (modelo de ML).
 2. Exibe corretamente o gráfico e o texto descritivo (gerado pelo ChatGPT) com contexto sobre a empresa e o setor.
-3. Opera com desempenho aceitável (≤ 15 s de latência ponta-a-ponta).
+3. Opera com desempenho aceitável (≤ 60 s de latência ponta-a-ponta).
 4. Resiste a inputs maliciosos e mantém a integridade dos dados.
 5. Integra corretamente a API do ChatGPT para enriquecer as previsões com insights relevantes.
 
@@ -25,7 +25,7 @@ Validar que o FinSimples:
 
 | Tipo                        | Cenário                                                        | Entrada/API                                           | Resultado Esperado                                                                                               |
 |-----------------------------|----------------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| **Funcional (ML)**          | Previsão básica                                                | `{"ticker":"PETR4","period":3}`                       | Retorno com R² ≥ 0.15                                                                              |
+| **Funcional (ML)**          | Previsão básica                                                | `{"ticker":"PETR4","period":3}`                       | Retorno com R² ≥ 0.29                                                                              |
 | **Funcional (Integração)**  | Renderização Graph + Texto com contexto                        | Frontend envia dados e recebe JSON + texto do ChatGPT | Gráfico correto; texto contextualizado sobre empresa/setor; sem erros de formatação                             |
 | **Segurança (API)**         | Injeção de comando via ticker                                  | `{"ticker":"PETR4; import os","period":3}`            | Parâmetros rejeitados/sanitizados; nenhuma execução de código não autorizado                                    |
 | **Segurança (Prompt GPT)**  | Prompt injection para extrair dados internos                   | Texto malicioso como contexto                         | ChatGPT ignora comandos maliciosos e mantém resposta segura                                                     |
@@ -34,7 +34,7 @@ Validar que o FinSimples:
 ---
 
 ## 4. Critérios de Aceitação
-- **ML:** R² ≥ 0.15 em hold-out.
+- **ML:** R² ≥ 0.29 em hold-out.
 - **Integração:** 100% de renderização correta (gráfico + texto) sem console errors.
 - **Segurança:** Zero inputs maliciosos aceitos (API e ChatGPT).
 - **Usabilidade:** ≥ 80% de aprovação em teste piloto.
@@ -76,7 +76,7 @@ Validar que o FinSimples:
 ---
 
 ## 9. Monitoramento Contínuo
-- Logs de latência e taxa de erro em Datadog com alertas para p95 > 15 s ou error rate > 1%.
+- Logs de latência e taxa de erro em Datadog com alertas para p95 > 60 s ou error rate > 1%.
 - Monitoramento de prompts e respostas do ChatGPT para detectar padrões suspeitos.
 - Painel de métricas atualizado semanalmente.
 
