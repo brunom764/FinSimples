@@ -5,7 +5,7 @@ _(Este canvas responde à necessidade de suportar o lançamento pleno do FinSimp
 ---
 
 ## 1. Objetivo da Escalabilidade
-Preparar a infraestrutura do FinSimples para suportar o lançamento para toda a base de usuários (de 2 investidores piloto para 50 investidores ativos), mantendo o tempo médio de resposta da API de previsão abaixo de 15 segundos.
+Preparar a infraestrutura do FinSimples para suportar o lançamento para toda a base de usuários (de 2 investidores piloto para 50 investidores ativos), mantendo o tempo médio de resposta da API de previsão abaixo de 3 segundos.
 
 ---
 
@@ -38,7 +38,7 @@ Preparar a infraestrutura do FinSimples para suportar o lançamento para toda a 
 - **Pré-computação:**  
   - Agendar retraining incremental e manter modelos prontos para deploy sem latência de carga  
 - **Fallback:**  
-  - Servir respostas de fallback estáticas (cache “read-only”) se a latência da ML/API ultrapassar 15 s
+  - Servir respostas de fallback estáticas (cache “read-only”) se a latência da ML/API ultrapassar 3 s
 
 ---
 
@@ -66,7 +66,7 @@ Preparar a infraestrutura do FinSimples para suportar o lançamento para toda a 
 ## 7. Monitoramento de Escalabilidade
 - Dashboards em Grafana/Datadog para:  
   - Uso de CPU das instâncias ML/API (> 80%)  
-  - Latência média de resposta (> 15 s)  
+  - Latência média de resposta (> 3 s)  
   - Taxa de erros (> 1%)
 
 ---
@@ -75,6 +75,6 @@ Preparar a infraestrutura do FinSimples para suportar o lançamento para toda a 
 - **Ferramenta:** k6 ou Locust  
 - **Cenário de Teste:** Simular 100 requisições/hora (rampa de 0→100 em 10 min), por 1 hora  
 - **Validação:**  
-  - 95% das respostas ≤ 15 s  
+  - 95% das respostas ≤ 3 s  
   - Load Balancer distribui tráfego uniformemente  
   - Cache apresenta hit rate ≥ 60%
