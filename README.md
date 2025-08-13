@@ -6,17 +6,38 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Desenvolvimento](https://img.shields.io/badge/Status-Desenvolvimento%20Ativo-brightgreen)]()
 
+<img width="506" height="647" alt="Captura de tela de 2025-08-10 09-00-49" src="https://github.com/user-attachments/assets/34c1f1d0-ae89-4f4a-8ac8-1b9036210201" />
+
+
+## Teste aqui: https://fin-simples-front.vercel.app/
+
+
+
 ## 🚀 Visão Geral
 
 O FinSimples é uma ferramenta que utiliza IA generativa para democratizar o acesso a informações do mercado financeiro. Através de uma interface simples, usuários podem obter projeções de retorno para diversos ativos com base em seu histórico, explicadas em linguagem acessível.
 
 ## ✨ Funcionalidades Principais
 
-- 🔍 Busca simplificada de ativos
-- ⏳ Projeções de retorno para diferentes horizontes de tempo
-- 📊 Visualizações intuitivas do histórico e tendências
-- 💡 Explicações em linguagem natural geradas por IA
-- ⚠️ Alertas sobre riscos 
+🔍 Projeção instantânea de retorno para ativos da B3
+
+📈 Visualização gráfica da previsão
+
+💡 Explicações em linguagem simples geradas por IA
+
+⚠️ Identificação de riscos principais
+
+📱 Interface mobile-friendly
+
+
+## Módulos
+
+<img width="1165" height="471" alt="Captura de tela de 2025-08-13 07-23-54" src="https://github.com/user-attachments/assets/9b0273f3-79b9-4395-999d-be9a2ef642a6" />
+
+- Web: É onde está todo o frontend da aplicação, feito utilizando Next.js
+- Api: É onde está o backend da aplicação, feito utilizando FASTAPI, acesse por aqui https://github.com/geydsonrenan/api-finSimples
+- Modeling: É onde está o core da nossa aplicação, o modelo de previsão.
+- Docs: É onde está todos os canvas desenvolvidos
 
 ## 📥 Instalação
 
@@ -26,17 +47,12 @@ git clone https://github.com/brunom764/finsimples.git
 cd finsimples
 ```
 
-2. Crie e ative um ambiente virtual (recomendado)
-
-3. Instale as dependências:
-
-
-4. Configure suas chaves de API (renomeie `.env.example` para `.env` e preencha com suas credenciais)
+2. Leia o README.md correspodente de cada mod́ulo
 
 
 ## 📚 Documentação
 
-Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://github.com/brunom764/FinSimples/blob/main/README.md).
+Para documentação completa, incluindo API reference e guias avançados, visite nossa [Wiki](https://docs.google.com/document/d/1aZEPVzjPLG-6tpEiHbeldaZMcJFiHiq1zVXHnJNrlME/edit?usp=sharing).
 
 ## 🤝 Como Contribuir
 
@@ -58,7 +74,10 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](http
 
 ## 🖼️ Screenshots
 
-~ em breve ~
+<img width="506" height="647" alt="Captura de tela de 2025-08-10 09-00-49" src="https://github.com/user-attachments/assets/a3af9e83-6036-4af4-b340-15122cc4b945" />
+
+<img width="536" height="929" alt="Captura de tela de 2025-08-10 09-03-31" src="https://github.com/user-attachments/assets/92c482c3-7665-4e57-8107-07607d76e4ba" />
+
 
 ## ❓ FAQ
 
@@ -68,7 +87,4 @@ A: Não. Todas as projeções são baseadas em dados históricos e não constitu
 **Q: Posso usar isso como única fonte para investir?**  
 A: Recomendamos usar como ferramenta educacional e sempre diversificar investimentos.
 
-## 📌 Estado do Projeto
-
-⚠️ **Beta** - Em desenvolvimento ativo. Novas funcionalidades sendo adicionadas semanalmente.
 
