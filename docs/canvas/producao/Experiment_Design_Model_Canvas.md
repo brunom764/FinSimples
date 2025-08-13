@@ -51,7 +51,7 @@ Acreditamos que **ao oferecer projeções + contexto/alertas gerados via ChatGPT
   - **Taxa de sucesso ≥ 70%** (sem intervenção adicional).
 - **Pivotar** se:
   - Redução < 40% no tempo médio.
-  - Satisfação < 3,5/5.
+  - Satisfação < 4/5.
   - > 30% dos usuários solicitam explicações adicionais/ajuda manual.
 
 ---
