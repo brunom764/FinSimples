@@ -33,8 +33,8 @@ Acreditamos que **ao oferecer projeções + contexto/alertas gerados via ChatGPT
 ---
 
 ## 4. Métricas-Chave de Aprendizagem
-- **Tempo até exibir o card (TTV)** — meta: ≤ 60 s.
-- **Latência LLM** (ChatGPT) — meta: ≤ 15 s do total.
+- **Tempo até exibir o card (TTV)** — meta: ≤ 3 s.
+- **Latência LLM** (ChatGPT) — meta: ≤ 1.8 s do total.
 - **Tempo médio de decisão** — entre exibição do card e clique em “Comprar/Não comprar”.
 - **Satisfação (clareza da linguagem)** — escala 1–5 (meta: ≥ 4/5).
 - **Utilidade dos alertas** — % de usuários que declaram que os alertas ajudaram (meta: ≥ 70%).
